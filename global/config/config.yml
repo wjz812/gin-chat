@@ -1,0 +1,38 @@
+Mysql:
+  Write:
+    Host: "localhost"       #数据库服务器的主机地址
+    DataBase: "ginchat"     #数据库的名称
+    Port: 3306              #数据库服务器的端口
+    User: "root"            #连接数据库的用户名
+    Pass: "root"            #连接数据库的密码
+    Charset: "utf8"         #字符集 编码格式
+    SetMaxIdleConns: 10     #最大空闲连接数
+    SetMaxOpenConns: 128    #最大打开连接数
+    SetConnMaxLifetime: 60s  #连接的最大生存期
+    Prefix: ""              #数据库表的前缀
+  Read:
+    Host: "localhost"
+    DataBase: "ginchat"
+    Port: 3306
+    Prefix: ""
+    User: "root"
+    Pass: "root"
+    Charset: "utf8"
+    SetMaxIdleConns: 10
+    SetMaxOpenConns: 128
+    SetConnMaxLifetime: 60s
+Redis:
+  Host: "127.0.0.1"         #服务器的地址
+  Port: 6379                #服务器的端口
+  Auth: ""                  #认证密码
+  MaxIdle: 10               #最大空闲连接数
+  MaxActive: 1000           #最大活动连接数
+  IdleTimeout: 60s          #空闲连接的超时时间
+  IndexDb: 1                #用于指定连接到哪个数据库索引
+  ConnFailRetryTimes: 3     #连接失败的重试次数
+  ReConnectInterval: 1s      #重试间隔时间
+HttpServer:
+  Api:
+    Port: ":8081"
+  Web:
+    Port: ":8010"

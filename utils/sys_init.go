@@ -10,6 +10,7 @@ import (
 
 	"github.com/go-redis/redis/v8"
 	"github.com/spf13/viper"
+	"gopkg.in/yaml.v3"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -30,6 +31,18 @@ func InitConfig() {
 	}
 }
 
+func InitConfigYmal() {
+	yamlBytes, err := os.ReadFile("global/config/config.yml")
+	if err != nil {
+		log.Fatalf("Failed to read Yaml file: %v", err)
+	}
+
+	err = yaml.Unmarshal(yamlBytes, &config.Conf)
+	if err != nil {
+		log.Fatalf("Failed to decode Yaml: %v", err)
+	}
+}
+
 func InitMySql() {
 	//自定义日志模板，打印SQL语句
 	newLogger := logger.New(
@@ -41,9 +54,27 @@ func InitMySql() {
 		},
 	)
 
-	DB, _ = gorm.Open(mysql.Open(viper.GetString("mysql.dns")),
+	Host := config.Conf.Mysql.Write.Host
+	DataBase := config.Conf.Mysql.Write.DataBase
+	Port := config.Conf.Mysql.Write.Port
+	User := config.Conf.Mysql.Write.User
+	Pass := config.Conf.Mysql.Write.Pass
+	Charset := config.Conf.Mysql.Write.Charset
+
+	// fmt.Println("=====:", Port, Host, DataBase, User, Pass, Charset)
+
+	dns := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=false&loc=Local",
+		User, Pass, Host, Port, DataBase, Charset)
+
+	//"root:root@tcp(localhost:3306)/ginchat?charset=utf8&parseTime=True&loc=Local"
+	fmt.Println("=====config mysql:", dns)
+
+	DB, _ = gorm.Open(mysql.Open(dns),
 		&gorm.Config{Logger: newLogger})
-	fmt.Println("config mysql:", viper.Get("mysql"))
+
+	// DB, _ = gorm.Open(mysql.Open(viper.GetString("mysql.dns")),
+	// 	&gorm.Config{Logger: newLogger})
+	// fmt.Println("config mysql:", viper.Get("mysql"))
 	config.GormDB = DB
 }
 
