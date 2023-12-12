@@ -12,5 +12,6 @@ func ApiRegisterValidator() {
 
 	containers.Set(consts.ValidatorPrefix+"UserLogin", user.UserLogin{})
 
+	containers.Set(consts.ValidatorPrefix+"UserList", user.UserList{})
 	// containers.Set(consts.ValidatorPrefix+"SendMsg", user.SendMsg{})
 }

@@ -36,3 +36,13 @@ HttpServer:
     Port: ":8081"
   Web:
     Port: ":8010"
+
+Token:
+  JwtTokenSignKey: "ch5s#$QXT!S7#t" 
+  JwtTokenOnlineUsers: 10  
+  BindContextKeyName: "accessToken" 
+  JwtTokenCreatedExpireAt: 28800s   # token valid times, 3600*8=28800 equal 8 hour
+  JwtTokenRefreshAllowSec: 86400
+  JwtTokenRefreshExpireAt: 36000  
+  JwtIssuer: "gin_chat_app" 
+  EnqueteTokenExpireAt: 259200  

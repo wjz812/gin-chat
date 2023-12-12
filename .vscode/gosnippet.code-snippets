@@ -1,0 +1,44 @@
+{
+    "ccm": {
+		"prefix": "ccm",
+		"body": [
+			"/**",
+			" * @description",
+			" * @return",
+			" * @date $CURRENT_YEAR/$CURRENT_MONTH/$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND @version 1.0.0 @add $1",
+			" */"
+		],
+		"description": "code comments"
+	},
+
+    "cc": {
+		"prefix": "cc",
+		"body": [
+			"/**",
+			" * @description",
+			" * @param ",
+			" * @return ",
+			" * @date $CURRENT_YEAR/$CURRENT_MONTH/$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND ",
+			" * @version: 1.0.0",
+			" * @author $1",
+			" */"
+		],
+		"description": "code comments"
+	},
+
+    "doc": {
+		"prefix":"doc",
+		"body": [
+			"// @Summary [summary]",
+			"// @Description [description]",
+			"// @Produce json",
+			"// @Param token header string true \"accessToken\"",
+			"// @Param api_param.xxx body object true \"body参数\"",
+			"// @Success 200 {object} string \"success\" \"创建成功\"",
+			"// @Failure 200 {object} string \"code：40100 创建失败\"",
+			"// @Router /api/v1/ [post]",
+			"// @Date $CURRENT_YEAR/$CURRENT_MONTH/$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
+			"// @Author $1"
+		]
+	},
+}

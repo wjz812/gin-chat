@@ -101,3 +101,7 @@ func (db *UserBasic) Token(id int64, token string) (err error) {
 	res := db.Exec(sql, token, id)
 	return res.Error
 }
+
+func (db *UserBasic) GetTokenUserInfo() {
+
+}

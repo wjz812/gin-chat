@@ -6,6 +6,7 @@ import (
 	"ginchat/http/api_param"
 	"ginchat/http/model"
 	"ginchat/pkg/response"
+	token_verify "ginchat/pkg/token"
 	"ginchat/utils"
 	"net/http"
 	"time"
@@ -14,6 +15,14 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+/**
+ * @description 用户登录
+ * @param
+ * @return
+ * @date 2023/12/12 14:58:35
+ * @version: 1.0.0
+ * @author
+ */
 func Login(c *gin.Context, req api_param.UserLoginReq) {
 	dbConn := model.UseDbConn().Begin()
 	defer dbConn.Rollback()
@@ -29,10 +38,13 @@ func Login(c *gin.Context, req api_param.UserLoginReq) {
 		return
 	}
 
-	//token 加密
-	str := fmt.Sprintf("%d", time.Now().Unix())
-	token := utils.MD5Encode(str)
+	token, err := token_verify.GenerateToken(req.Name) // 获取token
+	if err != nil {
+		response.Fail(c, consts.TokenGenerateErr.Code, consts.TokenGenerateErr.Msg, gin.H{})
+		return
+	}
 
+	//存储token
 	err = model.CreateUserModelFactory(dbConn).Token(userInfo.Id, token)
 	if err != nil {
 		fmt.Println(err)
@@ -45,6 +57,28 @@ func Login(c *gin.Context, req api_param.UserLoginReq) {
 		Name:     userInfo.Name,
 		Email:    userInfo.Email,
 		Identity: token,
+	}
+
+	dbConn.Commit()
+	response.Success(c, result)
+}
+
+/**
+ * @description 用户一览
+ * @param
+ * @return
+ * @date 2023/12/12 14:58:53
+ * @version: 1.0.0
+ * @author
+ */
+func List(c *gin.Context, req api_param.ListUserReq) {
+	dbConn := model.UseDbConn().Begin()
+	defer dbConn.Rollback()
+
+	result, err := model.CreateUserModelFactory(dbConn).List()
+	if err != nil {
+		response.Fail(c, consts.UserNotList.Code, consts.UserNotList.Msg, gin.H{})
+		return
 	}
 
 	dbConn.Commit()

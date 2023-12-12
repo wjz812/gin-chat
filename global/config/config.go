@@ -61,4 +61,16 @@ type Config struct {
 		} `yaml:"Web"`
 		AllowCrossDomain bool `yaml:"AllowCrossDomain"`
 	} `yaml:"HttpServer"`
+
+	Token struct {
+		JwtTokenSignKey         string        `yaml:"JwtTokenSignKey"`
+		JwtTokenOnlineUsers     int           `yaml:"JwtTokenOnlineUsers"`
+		JwtTokenCreatedExpireAt time.Duration `yaml:"JwtTokenCreatedExpireAt"`
+		JwtTokenRefreshAllowSec int64         `yaml:"JwtTokenRefreshAllowSec"`
+		JwtTokenRefreshExpireAt int64         `yaml:"JwtTokenRefreshExpireAt"`
+		JwtIssuer               string        `yaml:"JwtIssuer"`
+		BindContextKeyName      string        `yaml:"BindContextKeyName"`
+		IsCacheToRedis          int           `yaml:"IsCacheToRedis"`
+		EnqueteTokenExpireAt    int64         `yaml:"EnqueteTokenExpireAt"`
+	} `yaml:"Token"`
 }
