@@ -3,6 +3,7 @@ package register_validator
 import (
 	"ginchat/core/container"
 	"ginchat/global/consts"
+	"ginchat/http/validator/api/base"
 	"ginchat/http/validator/api/user"
 )
 
@@ -10,6 +11,7 @@ import (
 func ApiRegisterValidator() {
 	containers := container.CreateFactoryContainers()
 
+	containers.Set(consts.ValidatorPrefix+"GetIp", base.GetIp{})
 	containers.Set(consts.ValidatorPrefix+"UserLogin", user.UserLogin{})
 
 	containers.Set(consts.ValidatorPrefix+"UserList", user.UserList{})

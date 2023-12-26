@@ -36,6 +36,7 @@ HttpServer:
     Port: ":8081"
   Web:
     Port: ":8010"
+  AllowCrossDomain: true 
 
 Token:
   JwtTokenSignKey: "ch5s#$QXT!S7#t" 
